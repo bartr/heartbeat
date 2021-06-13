@@ -32,6 +32,11 @@ jobs:
         username: ${{ secrets.GH_ID }}
         password: ${{ secrets.GH_PAT }}
 
+    - name: Docker pull
+      run: |
+        docker pull golang:alpine
+        docker pull busybox
+        
     - name: Docker Build
       run: |
         docker build . -t image
