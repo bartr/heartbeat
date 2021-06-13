@@ -75,7 +75,11 @@ From a bash shell
 
 ```bash
 
-docker run -d --name tinybench -p 8080:8080 ghcr.io/retaildevcrews/tinybench:beta --log
+# build the docker image
+make build
+
+# run the local docker image
+make run
 
 # check the semver
 curl localhost:8080/version
@@ -104,21 +108,13 @@ curl -i localhost:8080/tinybench/1048577
 docker logs tinybench
 
 # other options
-docker run -it --rm ghcr.io/retaildevcrews/tinybench:beta -h
+docker run -it --rm tinybench -h
 
-```
+# test tinybench with WebV
+make test
 
-### Build TinyBench
-
-From a bash shell
-
-```bash
-
-# build with docker
-make build
-
-# build and run
-make all
+# generate 100 req/sec with WebV
+make load-test
 
 ```
 
