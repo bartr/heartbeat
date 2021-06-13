@@ -115,9 +115,6 @@ From a bash shell
 ```bash
 
 # build with docker
-docker build . -t mytinybench
-
-# build with go (requires go sdk)
 make build
 
 # build and run
