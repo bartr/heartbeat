@@ -20,7 +20,7 @@ jobs:
 
     runs-on: ubuntu-20.04
     env:
-      DOCKER_REPO: ghcr.io/cloudatx/tinybench
+      DOCKER_REPO: ghcr.io/bartr/tinybench
 
     steps:
     - uses: actions/checkout@v2
