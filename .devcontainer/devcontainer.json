@@ -1,25 +1,38 @@
 {
-	"name": "ASB-Hack",
+	"name": "log-app",
+	"dockerFile": "Dockerfile",
+	"remoteUser": "vscode",
 	"overrideCommand": false,
+	"runArgs": [
+		"--init",
+		"--privileged"
+	],
 
-	// Set *default* container specific settings.json values on container create.
-	"settings": { },
+	// Set container specific settings
+	"settings": {
+		"terminal.integrated.defaultProfile.linux": "zsh"
+	},
 
-	"remoteUser": "codespace",
-
-	"forwardPorts": [],
+	"hostRequirements": {
+		"cpus": 4
+	},
 
 	// Install extensions
 	"extensions": [
 		"davidanson.vscode-markdownlint",
 		"gruntfuggly.todo-tree",
-		"ms-azuretools.vscode-docker",
 		"mutantdino.resourcemonitor",
-		"eamodio.gitlens",
+		"humao.rest-client",
 		"golang.go",
-		"humao.rest-client"
+		"ms-azuretools.vscode-docker"
 	],
 
-	// Run Bash script in .devcontainer directory
-	"postCreateCommand": "/bin/bash .devcontainer/post-install.sh"
+	// Use 'onCreateCommand' to run commands as part of container creation.
+	"onCreateCommand": "/bin/bash -c .devcontainer/on-create.sh",
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "/bin/bash -c .devcontainer/post-create.sh",
+
+	// Use 'postStartCommand' to run commands after the container starts.
+	"postStartCommand": "/bin/bash -c .devcontainer/post-start.sh"
 }
