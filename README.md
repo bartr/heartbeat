@@ -55,7 +55,7 @@ TinyBench is configurable
 
 TinyBench supports a `single pane of glass`
 
-- Easily integrate TinyBench with [LodeRunner](https://github.com/retaildevcrews/loderunner) for single pane of glass via logs and metrics
+- Easily integrate TinyBench with [WebValidate](https://github.com/cse-labs/webvalidate) for single pane of glass via logs and metrics
 - Any tool that can make http requests will work, so TinyBench likely `drops right in`
   - We use `Fluent Bit` and `Prometheus`
 
