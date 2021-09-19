@@ -20,7 +20,7 @@ run :
 	docker logs tinybench
 
 test :
-	webv --server http://localhost:8080 --files tinybench.json
+	@cd webv && webv --server http://localhost:8080 --files tinybench.json --verbose
 
 load-test :
-	webv --server http://localhost:8080 --files tinybench.json -r --sleep 10 --duration 60
+	@cd webv && webv --server http://localhost:8080 --files load.json -r --sleep 100 --duration 30 --verbose
