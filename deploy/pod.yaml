@@ -9,7 +9,7 @@ spec:
   containers:
   - name: app
     imagePullPolicy: Always
-    image: ghcr.io/retaildevcrews/tinybench:beta
+    image: ghcr.io/cse-labs/tinybench:beta
 
     args:
       - --log
