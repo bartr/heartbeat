@@ -1,10 +1,6 @@
 name: Build tinybench
 
 on:
-  schedule:
-    # Run Sunday at 6:00 AM UTC
-    - cron: "0 6 * * 0"
-
   push:
     branches:
       - main
@@ -12,7 +8,6 @@ on:
     paths:
     - 'Dockerfile'
     - '**.go'
-    - '.github/workflows/build.yaml'
 
 jobs:
 
@@ -20,8 +15,7 @@ jobs:
 
     runs-on: ubuntu-20.04
     env:
-      BARTR: ghcr.io/bartr/tinybench
-      CSE_LABS: ghcr.io/cse-labs/tinybench
+      IMAGE: ghcr.io/bartr/tinybench
 
     steps:
     - uses: actions/checkout@v2
@@ -46,13 +40,7 @@ jobs:
       run: |
 
         # tag the image
-        docker tag image $BARTR:latest
-        docker tag image $BARTR:beta
-
-        # tag the image
-        docker tag image $CSE_LABS:latest
-        docker tag image $CSE_LABS:beta
+        docker tag image $IMAGE:latest
 
         # Push to the registries
-        docker push -a $BARTR
-        docker push -a $CSE_LABS
+        docker push -a $IMAGE
