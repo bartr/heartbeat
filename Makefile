@@ -1,4 +1,4 @@
-.PHONY: help all build run test load-test
+.PHONY: help all build run test load-test local
 
 help :
 	@echo "Usage:"
@@ -7,8 +7,16 @@ help :
 	@echo "   make run         - run TinyBench from docker image"
 	@echo "   make test        - run a test against TinyBench"
 	@echo "   make load-test   - run a 60 second load test against TinyBench (100 req/sec)"
+	@echo "   make local       - build local executables"
 
 all : build run test
+
+local :
+	# Building Linux binary
+	@CGO_ENABLED=0 GOOS=linux go build -ldflags="-X main.Version=0.0.1" -o bin/tinybench -a src/main.go
+
+	# Building Windows binary
+	@CGO_ENABLED=0 GOOS=windows go build -ldflags="-X main.Version=0.0.1" -o bin/tinybench.exe -a src/main.go
 
 build :
 	docker pull golang:alpine
