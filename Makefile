@@ -19,8 +19,6 @@ local :
 	@CGO_ENABLED=0 GOOS=windows go build -ldflags="-X main.Version=0.0.1" -o bin/tinybench.exe -a src/main.go
 
 build :
-	docker pull golang:alpine
-	docker pull busybox
 	docker build . -t tinybench
 
 run :
