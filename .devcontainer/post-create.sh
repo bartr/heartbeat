@@ -10,6 +10,4 @@ echo "post-create start" >> ~/status
 #sudo apt autoremove -y
 #sudo apt clean -y
 
-# add your commands here
-
 echo "post-create complete" >> ~/status

@@ -4,7 +4,7 @@
 FROM ghcr.io/cse-labs/dind:latest
 
 # install go
-RUN wget -c https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz -O - | tar -xz -C /usr/local
+RUN wget -c https://dl.google.com/go/go1.16.linux-amd64.tar.gz -O - | tar -xz -C /usr/local
 
 # add to path
 ENV PATH=$PATH:/usr/local/go/bin
