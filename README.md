@@ -4,11 +4,15 @@
 
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
+> New: Linux and Windows binaries are in the ./bin directory and the release
+>
+> `make local` will build the Linux and Windows binaries locally
+
 ## Project Description
 
-TinyBench is a very simple http server written in `go` designed to allow you to measure and monitor network performance `into your k8s clusters`. Unlike most network tools, TinyBench runs as a k8s pod which monitors and measures through ingress and service mesh ensuring an end-to-end measurement.
+TinyBench is a simple http server written in `go` designed to allow you to measure and monitor network performance `into your k8s clusters`. Unlike most network tools, TinyBench runs as a k8s pod which monitors and measures all the way through ingress and service mesh ensuring an end-to-end measurement.
 
-TinyBench will run on any Kubernetes server and is targeted at `edge` scenarios as well as cloud and on-prem. Because we targeted the edge by design, we engineered TinyBench to be, well, `tiny`
+TinyBench will run on any Kubernetes cluster and is targeted at `edge` scenarios as well as cloud and on-prem. Because we targeted the edge by design, we engineered TinyBench to be, well, `tiny`
 
 We designed TinyBench to run on thousands of edge nodes. During design, here is what `tiny` meant to us
 
@@ -36,7 +40,7 @@ TinyBench is also fast. Really fast!
 - A 1GB result takes < 4s
   - TinyBench is designed for `small payloads` but, we figured, why not test to 1GB?
 - TinyBench is so fast that we turned logging off by default
-  - Your `single pane of glass` will tell you if TinyWeb goes down
+  - Your `single pane of glass` will tell you if TinyBench goes down
     - Centralized monitoring of the edge!
   - This also lightens the load on your k8s cluster by not generating extra logs to parse and forward
   - You can turn it on with `--log` and TinyBench will write to stdout (tab delimited)
@@ -55,19 +59,20 @@ TinyBench is configurable
 
 TinyBench supports a `single pane of glass`
 
-- Easily integrate TinyBench with [WebValidate](https://github.com/cse-labs/webvalidate) for single pane of glass via logs and metrics
-- Any tool that can make http requests will work, so TinyBench likely `drops right in`
-  - We use `Fluent Bit` and `Prometheus`
+- Easily integrate TinyBench with [WebValidate](https://github.com/microsoft/webvalidate) for single pane of glass via logs and metrics
+  - This is how we run TinyBench every day
+- We use `Fluent Bit` and `Prometheus`
+  - Any tool that can make http requests will work, so TinyBench likely `drops right in`
 
 Probes
 
-- For simplicity, we don't provide a dedicated startup or health probe
+- For simplicity, we don't provide a dedicated ready or health probe
 - We use `/tinybench/1`
 
 Testing Uploads
 
-- You can test upload speed by POSTing to /tinyweb/1
-- Payload doesn't matter as we read it and throw it away
+- You can test upload speed by POSTing to /tinybench/1
+  - Payload doesn't matter as we read it and throw it away
 
 ### Try TinyBench
 
@@ -125,20 +130,12 @@ make load-test
 - GitHub Actions (ci-cd pipelines)
   - [Build container image](./.github/workflows/build.yaml)
 
-### Contributing
+## Contributing
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit <https://cla.opensource.microsoft.com>
+This project welcomes contributions and suggestions and has adopted the [Contributor Covenant Code of Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct.html).
 
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
+For more information see the [Code of Conduct FAQ](https://www.contributor-covenant.org/faq).
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+## Trademarks
 
-### Trademarks
-
-This project may contain trademarks or logos for projects, products, or services.
-
-Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
-
-Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
-
-Any use of third-party trademarks or logos are subject to those third-party's policies.
+This project may contain trademarks or logos for projects, products, or services. Any use of third-party trademarks or logos are subject to those third-party's policies.
