@@ -1,4 +1,4 @@
-# TinyBench
+# Heartbeat
 
 > Tiny Kubernetes web server for network testing and monitoring
 
@@ -10,11 +10,11 @@
 
 ## Project Description
 
-TinyBench is a simple http server written in `go` designed to allow you to measure and monitor network performance `into your k8s clusters`. Unlike most network tools, TinyBench runs as a k8s pod which monitors and measures all the way through ingress and service mesh ensuring an end-to-end measurement.
+Heartbeat is a simple http server written in `go` designed to allow you to measure and monitor network performance `into your k8s clusters`. Unlike most network tools, Heartbeat runs as a k8s pod which monitors and measures all the way through ingress and service mesh ensuring an end-to-end measurement.
 
-TinyBench will run on any Kubernetes cluster and is targeted at `edge` scenarios as well as cloud and on-prem. Because we targeted the edge by design, we engineered TinyBench to be, well, `tiny`
+Heartbeat will run on any Kubernetes cluster and is targeted at `edge` scenarios as well as cloud and on-prem. Because we targeted the edge by design, we engineered Heartbeat to be, well, `tiny`
 
-We designed TinyBench to run on thousands of edge nodes. During design, here is what `tiny` meant to us
+We designed Heartbeat to run on thousands of edge nodes. During design, here is what `tiny` meant to us
 
 - The code has to run 7x24x365
 - The code has to be simple to deploy
@@ -33,48 +33,48 @@ Here are our current results
 - Deploy as a pod, via Helm or via GitOps
 - Deploy it and forget it - your `single pane of glass` will alert you to any problems
 
-TinyBench is also fast. Really fast!
+Heartbeat is also fast. Really fast!
 
 - 64K and less results are measured in micro-seconds
 - A 1MB result takes < 5ms
 - A 1GB result takes < 4s
-  - TinyBench is designed for `small payloads` but, we figured, why not test to 1GB?
-- TinyBench is so fast that we turned logging off by default
-  - Your `single pane of glass` will tell you if TinyBench goes down
+  - Heartbeat is designed for `small payloads` but, we figured, why not test to 1GB?
+- Heartbeat is so fast that we turned logging off by default
+  - Your `single pane of glass` will tell you if Heartbeat goes down
     - Centralized monitoring of the edge!
   - This also lightens the load on your k8s cluster by not generating extra logs to parse and forward
-  - You can turn it on with `--log` and TinyBench will write to stdout (tab delimited)
+  - You can turn it on with `--log` and Heartbeat will write to stdout (tab delimited)
 
-TinyBench is reliable
+Heartbeat is reliable
 
 - We have already run over ~~100M~~ ~~5000M~~ 1B requests (mixture of 1K, 64K and 1MB) on a mixture of k8s clusters with zero errors!
 - While not intended for this load, we are able to provide 10K RPS reliably with < 2ms degredation at 1MB
   - In 10MB of ram!
 
-TinyBench is configurable
+Heartbeat is configurable
 
 - One of the problems, especially on the edge, is network packet fragmentation
 - Tiny bench allows you to configure the result to the byte, so you can easily test edge cases
   - You have to do the http overhead math - at least for now
 
-TinyBench supports a `single pane of glass`
+Heartbeat supports a `single pane of glass`
 
-- Easily integrate TinyBench with [WebValidate](https://github.com/microsoft/webvalidate) for single pane of glass via logs and metrics
-  - This is how we run TinyBench every day
+- Easily integrate Heartbeat with [WebValidate](https://github.com/microsoft/webvalidate) for single pane of glass via logs and metrics
+  - This is how we run Heartbeat every day
 - We use `Fluent Bit` and `Prometheus`
-  - Any tool that can make http requests will work, so TinyBench likely `drops right in`
+  - Any tool that can make http requests will work, so Heartbeat likely `drops right in`
 
 Probes
 
 - For simplicity, we don't provide a dedicated ready or health probe
-- We use `/tinybench/1`
+- We use `/heartbeat/1`
 
 Testing Uploads
 
-- You can test upload speed by POSTing to /tinybench/1
+- You can test upload speed by POSTing to /heartbeat/1
   - Payload doesn't matter as we read it and throw it away
 
-### Try TinyBench
+### Try Heartbeat
 
 From a bash shell
 
@@ -90,32 +90,32 @@ make run
 curl localhost:8080/version
 
 # 0123456789ABCDEF0
-curl localhost:8080/tinybench/17
+curl localhost:8080/heartbeat/17
 
 # 1K + 1 (should end with 0)
-curl localhost:8080/tinybench/1025
+curl localhost:8080/heartbeat/1025
 
 # you probably figured out the last URI segment is the number of bytes
 
 # 1MB
-curl localhost:8080/tinybench/1048576
+curl localhost:8080/heartbeat/1048576
 
 # this will show you how slow stdout is
-curl localhost:8080/tinybench/1048576 > /dev/null
+curl localhost:8080/heartbeat/1048576 > /dev/null
 
 # these will return 400
 # default config is 1 <= size <= 1MB
-curl -i localhost:8080/tinybench/0
+curl -i localhost:8080/heartbeat/0
 
-curl -i localhost:8080/tinybench/1048577
+curl -i localhost:8080/heartbeat/1048577
 
 # check the logs
-docker logs tinybench
+docker logs heartbeat
 
 # other options
-docker run -it --rm tinybench -h
+docker run -it --rm heartbeat -h
 
-# test tinybench with WebV
+# test heartbeat with WebV
 make test
 
 # generate 100 req/sec with WebV
