@@ -32,7 +32,7 @@ jobs:
           goarch: ${{ matrix.goarch }}
           project_path: "./src"
           binary_name: "heartbeat"
-          ldflags: "-s -w -X main.Version=0.1.0"
+          ldflags: "-s -w -X main.Version=0.1.0-$(date +%m%d-%H%M)"
 
     - name: Docker pull
       run: |
