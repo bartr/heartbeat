@@ -1,4 +1,0 @@
-{
-  "default":{"category":"default","quartiles":[40,80,10]},
-  "Static":{"category":"Static","quartiles":[40,80,160]}
-}

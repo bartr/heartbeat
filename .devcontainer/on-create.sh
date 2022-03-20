@@ -2,9 +2,9 @@
 
 echo "on-create start" >> ~/status
 
-# this runs when container is initially created
+echo "export GOPATH='$HOME/go'" >> $HOME/.zshrc
 
-go get -v golang.org/x/tools/gopls
+go install golang.org/x/tools/gopls@latest
 
 # pull docker base images
 docker pull golang:alpine

@@ -1,4 +1,4 @@
-name: Build tinybench
+name: Build Heartbeat
 
 on:
   push:
@@ -15,7 +15,8 @@ jobs:
 
     runs-on: ubuntu-20.04
     env:
-      IMAGE: ghcr.io/bartr/tinybench
+      IMAGE: ghcr.io/bartr/heartbeat
+      CSE: ghcr.io/cse-labs/heartbeat
 
     steps:
     - uses: actions/checkout@v2
@@ -40,7 +41,9 @@ jobs:
       run: |
 
         # tag the image
-        docker tag image $IMAGE:latest
+        docker tag image $IMAGE:beta
+        docker tag image $CSE:beta
 
         # Push to the registries
         docker push -a $IMAGE
+        docker push -a $CSE

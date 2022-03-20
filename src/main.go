@@ -12,7 +12,7 @@ import (
 )
 
 // default values
-var uri = "/tinybench/"
+var uri = "/heartbeat/"
 var port = 8080
 var buffer = "0123456789ABCDEF"
 var minSize = 1
@@ -44,11 +44,14 @@ func setupHandlers() {
 	buffer = strings.Repeat(buffer, bufferSize*1024/16)
 	bufferSize = len(buffer)
 
-	// handle /api/benchmark/
-	http.Handle(uri, http.HandlerFunc(benchmarkHandler))
+	// handle /heartbeat/
+	http.Handle(uri, http.HandlerFunc(heartbeatHandler))
 
 	// handle /healthz
 	http.Handle("/healthz", http.HandlerFunc(healthzHandler))
+
+	// handle /readyz
+	http.Handle("/readyz", http.HandlerFunc(readyzHandler))
 
 	// handle /version
 	http.Handle("/version", http.HandlerFunc(versionHandler))
@@ -130,24 +133,25 @@ func parseCommandLine() {
 	logResults = *l
 }
 
+// very basic logging
 func logToConsole(code int, path string, duration time.Duration) {
 	if logResults {
 		log.Println(code, "\t", duration, "\t", path)
 	}
 }
 
-// handle /
+// handle /  /index.*  and /default.*
 func rootHandler(w http.ResponseWriter, r *http.Request) {
+	// start the request timer
+	start := time.Now()
+
 	if r.URL.Path == "/" || strings.HasPrefix(r.URL.Path, "/index.") || strings.HasPrefix(r.URL.Path, "/default.") {
 
-		// start the request timer
-		start := time.Now()
+		http.Redirect(w, r, uri+"17", http.StatusMovedPermanently)
 
-		w.Header().Add("Cache-Control", "no-cache")
-		fmt.Fprintf(w, "Under construction ...\n")
-
-		logToConsole(200, r.URL.Path, time.Since(start))
+		logToConsole(http.StatusMovedPermanently, r.URL.Path, time.Since(start))
 	} else {
+		logToConsole(http.StatusNotFound, r.URL.Path, time.Since(start))
 		w.WriteHeader(http.StatusNotFound)
 	}
 }
@@ -160,7 +164,18 @@ func healthzHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Cache-Control", "no-cache")
 	fmt.Fprintf(w, "Pass\n")
 
-	logToConsole(200, r.URL.Path, time.Since(start))
+	logToConsole(http.StatusOK, r.URL.Path, time.Since(start))
+}
+
+// handle /readyz
+func readyzHandler(w http.ResponseWriter, r *http.Request) {
+	// start the request timer
+	start := time.Now()
+
+	w.Header().Add("Cache-Control", "no-cache")
+	fmt.Fprintf(w, "Ready\n")
+
+	logToConsole(http.StatusOK, r.URL.Path, time.Since(start))
 }
 
 // handle /version
@@ -171,11 +186,11 @@ func versionHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Cache-Control", "no-cache")
 	fmt.Fprintf(w, Version+"\n")
 
-	logToConsole(200, r.URL.Path, time.Since(start))
+	logToConsole(http.StatusOK, r.URL.Path, time.Since(start))
 }
 
-// handle /api/benchmark (or -u)
-func benchmarkHandler(w http.ResponseWriter, r *http.Request) {
+// handle /heartbeat (or -u)
+func heartbeatHandler(w http.ResponseWriter, r *http.Request) {
 	// start the request timer
 	start := time.Now()
 
@@ -186,7 +201,7 @@ func benchmarkHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil || size < minSize || size > maxSize {
 		w.WriteHeader(http.StatusBadRequest)
 
-		logToConsole(400, r.URL.Path, time.Since(start))
+		logToConsole(http.StatusBadRequest, r.URL.Path, time.Since(start))
 
 		return
 	}
@@ -204,5 +219,5 @@ func benchmarkHandler(w http.ResponseWriter, r *http.Request) {
 	// send the remaining data
 	fmt.Fprintf(w, buffer[0:size%bufferSize])
 
-	logToConsole(200, r.URL.Path, time.Since(start))
+	logToConsole(http.StatusOK, r.URL.Path, time.Since(start))
 }
