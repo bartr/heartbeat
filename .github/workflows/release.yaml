@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        goos: [linux,windows]
+        goos: [linux]
         goarch: [amd64]
 
     steps:
