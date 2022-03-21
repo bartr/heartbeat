@@ -25,4 +25,4 @@ jobs:
           goarch: ${{ matrix.goarch }}
           project_path: "./src"
           binary_name: "heartbeat"
-          ldflags: "-s -w"
+          ldflags: "-s -w -X main.Version=0.1.0"
