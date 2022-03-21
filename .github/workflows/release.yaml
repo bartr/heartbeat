@@ -8,6 +8,9 @@ jobs:
   releases-matrix:
     name: Release Go Binary
     runs-on: ubuntu-latest
+    env:
+      IMAGE: ghcr.io/bartr/heartbeat
+      CSE: ghcr.io/cse-labs/heartbeat
 
     strategy:
       matrix:
