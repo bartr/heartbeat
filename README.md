@@ -77,9 +77,13 @@ Testing Uploads
 ### Command Line Flags
 
 - -uri URI to listen on - default: /heartbeat
+  - Cannot be `/`
 - -port port to listen on - default: 8080
+  - Valid port - 1 - 64K
 - -min minimum response size - default: 1
+  - Must be > 0 and <= -max
 - -max maximum response size - default: 1024
+  - Must be <= 1 GB and >= -min
 - -log log incoming requests to stdout - default: false
 - -v display version
 
