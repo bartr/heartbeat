@@ -4,7 +4,7 @@
 
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-> New: Linux and Windows binaries are in the ./bin directory and the release
+> New: Linux and Windows binaries are in the the releases
 >
 > `make local` will build the Linux and Windows binaries locally
 
@@ -12,7 +12,7 @@
 
 Heartbeat is a simple http server written in `go` designed to allow you to measure and monitor network performance `into your k8s clusters`. Unlike most network tools, Heartbeat runs as a k8s pod which monitors and measures all the way through ingress and service mesh ensuring an end-to-end measurement.
 
-Heartbeat will run on any Kubernetes cluster and is targeted at `edge` scenarios as well as cloud and on-prem. Because we targeted the edge by design, we engineered Heartbeat to be, well, `tiny`
+Heartbeat will run on any Kubernetes cluster and is targeted at `edge` scenarios as well as cloud and on-prem. Because we targeted the edge by design, we engineered Heartbeat to be `tiny`
 
 We designed Heartbeat to run on thousands of edge nodes. During design, here is what `tiny` meant to us
 
@@ -66,13 +66,22 @@ Heartbeat supports a `single pane of glass`
 
 Probes
 
-- For simplicity, we don't provide a dedicated ready or health probe
-- We use `/heartbeat/1`
+- `/healthz`
+- `/readyz`
 
 Testing Uploads
 
 - You can test upload speed by POSTing to /heartbeat/1
   - Payload doesn't matter as we read it and throw it away
+
+### Command Line Flags
+
+- -uri URI to listen on - default: /heartbeat
+- -port port to listen on - default: 8080
+- -min minimum response size - default: 1
+- -max maximum response size - default: 1024
+- -log log incoming requests to stdout - default: false
+- -v display version
 
 ### Try Heartbeat
 

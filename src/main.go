@@ -56,7 +56,7 @@ func setupHandlers() {
 	// handle /version
 	http.Handle("/version", http.HandlerFunc(versionHandler))
 
-	// handle / and /index.htm[l]
+	// handle all other URIs
 	http.Handle("/", http.HandlerFunc(rootHandler))
 }
 
@@ -80,7 +80,6 @@ func parseCommandLine() {
 	max := flag.Int("max", maxSize, "maximum response size")
 	l := flag.Bool("log", logResults, "log incoming requests")
 	v := flag.Bool("v", false, "display version")
-	b := flag.Int("b", bufferSize, "buffer size (KB) (1-1024)")
 
 	flag.Parse()
 
@@ -90,21 +89,20 @@ func parseCommandLine() {
 	}
 
 	// check URI
-	if !strings.HasPrefix(*u, "/") || len(*u) < 3 {
+	if !strings.HasPrefix(*u, "/") {
 		flag.Usage()
-		log.Fatal("invalid URI")
+		log.Fatal("URI must start with /")
+	}
+
+	if *u == "/" {
+		flag.Usage()
+		log.Fatal("URI cannot be '/'")
 	}
 
 	// check port
 	if *p <= 0 || *p >= 64*1024 {
 		flag.Usage()
 		log.Fatal("invalid port")
-	}
-
-	// check buffer size
-	if *b < 1 || *b > 1024 {
-		flag.Usage()
-		log.Fatal("buffer size must be between 1 and 1024")
 	}
 
 	// check min
