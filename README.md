@@ -54,7 +54,7 @@ Heartbeat is reliable
 Heartbeat is configurable
 
 - One of the problems, especially on the edge, is network packet fragmentation
-- Tiny bench allows you to configure the result to the byte, so you can easily test edge cases
+- Heartbeat allows you to configure the result to the byte, so you can easily test edge cases
   - You have to do the http overhead math - at least for now
 
 Heartbeat supports a `single pane of glass`
@@ -118,7 +118,7 @@ docker run -it --rm heartbeat -h
 # test heartbeat with WebV
 make test
 
-# generate 100 req/sec with WebV
+# generate 100 req/sec for 30 seconds with WebV
 make load-test
 
 ```

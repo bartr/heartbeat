@@ -13,10 +13,10 @@ all : build run test
 
 local :
 	# Building Linux binary
-	@CGO_ENABLED=0 GOOS=linux go build -ldflags="-X main.Version=0.1.0" -o bin/heartbeat -a src/main.go
+	@CGO_ENABLED=0 GOOS=linux go build -ldflags="-X main.Version=0.2.0" -o bin/heartbeat -a src/main.go
 
 	# Building Windows binary
-	@CGO_ENABLED=0 GOOS=windows go build -ldflags="-X main.Version=0.1.0" -o bin/heartbeat.exe -a src/main.go
+	@CGO_ENABLED=0 GOOS=windows go build -ldflags="-X main.Version=0.2.0" -o bin/heartbeat.exe -a src/main.go
 
 build :
 	docker build . -t heartbeat
@@ -29,4 +29,4 @@ test :
 	@cd webv && webv --server http://localhost:8080 --files heartbeat.json --verbose --verbose-errors
 
 load-test :
-	@cd webv && webv --server http://localhost:8080 --files load.json -r --sleep 100 --duration 30 --verbose
+	@cd webv && webv --server http://localhost:8080 --port 8088 --files load.json -r --sleep 10 --duration 30 --verbose
