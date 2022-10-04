@@ -1,4 +1,4 @@
-# Heartbeat
+# Kubernetes Heartbeat
 
 > Kubernetes web server for network and cluster testing and monitoring
 
