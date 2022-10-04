@@ -1,12 +1,14 @@
 # Heartbeat
 
-> Tiny Kubernetes web server for network testing and monitoring
+> Kubernetes web server for network and cluster testing and monitoring
 
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-> New: Linux and Windows binaries are in the the releases
->
-> `make local` will build the Linux and Windows binaries locally
+- Docker Container Registry
+  - <https://github.com/orgs/cse-labs/packages/container/package/heartbeat>
+- Linux and Windows binaries are in the the releases
+  - <https://github.com/bartr/heartbeat/releases>
+- `make local` will build the Linux and Windows binaries locally
 
 ## Project Description
 
