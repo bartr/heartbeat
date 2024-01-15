@@ -4,10 +4,7 @@ echo "post-create start" >> ~/status
 
 # this runs in background after UI is available
 
-# (optional) upgrade packages
-sudo apt update
-#sudo apt upgrade -y
-#sudo apt autoremove -y
-#sudo apt clean -y
+echo "update oh-my-zsh"
+git -C "$HOME/.oh-my-zsh" pull
 
 echo "post-create complete" >> ~/status

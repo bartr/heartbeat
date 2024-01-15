@@ -3,29 +3,45 @@
 	"dockerFile": "Dockerfile",
 	"remoteUser": "vscode",
 	"overrideCommand": false,
-	"runArgs": [
-		"--init",
-		"--privileged"
-	],
+	"mounts": [ "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind" ],
+	"runArgs": [ "--init", "--privileged" ],
 
-	// Set container specific settings
-	"settings": {
-		"terminal.integrated.defaultProfile.linux": "zsh"
+	"customizations": {
+		"vscode": {
+			// Set container specific settings
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "zsh",
+				"files.trimTrailingWhitespace": true,
+				"files.trimFinalNewlines": true,
+				"files.insertFinalNewline": true
+			},
+
+			// Install extensions
+			"extensions": [
+				"ms-dotnettools.csharp",
+				"ms-azuretools.vscode-docker",
+				"ms-kubernetes-tools.vscode-kubernetes-tools",
+				"davidanson.vscode-markdownlint",
+				"gruntfuggly.todo-tree",
+				"mutantdino.resourcemonitor",
+				"humao.rest-client",
+				"timonwong.shellcheck",
+				"golang.go"
+			]
+		}
+	},
+
+	// forward ports for the app
+	"forwardPorts": [ 8080 ],
+
+	// add labels
+	"portsAttributes": {
+		"8080": { "label": "Heartbeat" }
 	},
 
 	"hostRequirements": {
 		"cpus": 4
 	},
-
-	// Install extensions
-	"extensions": [
-		"davidanson.vscode-markdownlint",
-		"gruntfuggly.todo-tree",
-		"mutantdino.resourcemonitor",
-		"humao.rest-client",
-		"golang.go",
-		"ms-azuretools.vscode-docker"
-	],
 
 	"waitFor": "postCreateCommand",
 
