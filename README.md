@@ -29,7 +29,7 @@ We designed Heartbeat to run on thousands of edge nodes. During design, here is 
 
 Here are our current results
 
-- Docker image size - 7.46 MB
+- Docker image size - 6.78 MB
 - Memory usage - 10 MB
 - Less than 200 lines of code
 - Deploy as a pod, via Helm or via GitOps

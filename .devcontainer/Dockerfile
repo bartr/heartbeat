@@ -3,11 +3,19 @@
 
 FROM ghcr.io/cse-labs/k3d:latest
 
-# install go
-RUN mkdir -p /home/vscode/go/bin && \
-    rm -rf /user/local/go && \
-    wget -c https://dl.google.com/go/go1.18.linux-amd64.tar.gz -O - | tar -xz -C /usr/local
+# some images require specific values
+ARG USERNAME=vscode
+#ENV PATH=$PATH:/home/vscode/bin:/opt/mssql-tools/bin
 
-# add to path
-ENV PATH=$PATH:/usr/local/go/bin:/home/vscode/go/bin \
-    GOPATH=/home/vscode/go
+# update welcome message; chown home dir
+RUN echo "$(date +'%Y-%m-%d %H:%M:%S')    docker build start" >> "/home/${USERNAME}/status" && \
+    mkdir -p "/home/${USERNAME}/.config/vscode-dev-containers" && \
+    mkdir -p /usr/local/etc/vscode-dev-containers && \
+    echo "👋 Welcome to Heartbeat!" > /usr/local/etc/vscode-dev-containers/first-run-notice.txt && \
+    echo "" >> /usr/local/etc/vscode-dev-containers/first-run-notice.txt && \
+    echo "🔍 To explore, open the README.md file" >> /usr/local/etc/vscode-dev-containers/first-run-notice.txt && \
+    echo "" >> /usr/local/etc/vscode-dev-containers/first-run-notice.txt && \
+    echo "cat /usr/local/etc/vscode-dev-containers/first-run-notice.txt" >> /etc/zsh/zshrc && \
+    touch "/home/${USERNAME}/.config/vscode-dev-containers/first-run-notice-already-displayed" && \
+    echo "$(date +'%Y-%m-%d %H:%M:%S')    docker build complete" >> "/home/${USERNAME}/status" && \
+    chown -R ${USERNAME}:${USERNAME} "/home/${USERNAME}"

@@ -16,11 +16,11 @@ all : docker run test
 
 linux :
 	# Building Linux binary
-	@CGO_ENABLED=0 GOOS=linux go build -ldflags="-X main.Version=0.2.0" -o bin/heartbeat -a src/main.go
+	@CGO_ENABLED=0 GOOS=linux go build -ldflags="-X main.Version=0.3.0" -o bin/heartbeat -a src/main.go
 
 windows :
 	# Building Windows binary
-	@CGO_ENABLED=0 GOOS=windows go build -ldflags="-X main.Version=0.2.0" -o bin/heartbeat.exe -a src/main.go
+	@CGO_ENABLED=0 GOOS=windows go build -ldflags="-X main.Version=0.3.0" -o bin/heartbeat.exe -a src/main.go
 
 docker :
 	docker build . -t heartbeat
