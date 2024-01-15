@@ -11,7 +11,7 @@ ARG USERNAME=vscode
 RUN echo "$(date +'%Y-%m-%d %H:%M:%S')    docker build start" >> "/home/${USERNAME}/status" && \
     mkdir -p "/home/${USERNAME}/.config/vscode-dev-containers" && \
     mkdir -p /usr/local/etc/vscode-dev-containers && \
-    echo "👋 Welcome to Heartbeat Labs!" > /usr/local/etc/vscode-dev-containers/first-run-notice.txt && \
+    echo "👋 Welcome to Heartbeat!" > /usr/local/etc/vscode-dev-containers/first-run-notice.txt && \
     echo "" >> /usr/local/etc/vscode-dev-containers/first-run-notice.txt && \
     echo "🔍 To explore, open the README.md file" >> /usr/local/etc/vscode-dev-containers/first-run-notice.txt && \
     echo "" >> /usr/local/etc/vscode-dev-containers/first-run-notice.txt && \
