@@ -1,5 +1,5 @@
 {
-	"name": "log-app",
+	"name": "heartbeat",
 	"dockerFile": "Dockerfile",
 	"remoteUser": "vscode",
 	"overrideCommand": false,
@@ -27,7 +27,7 @@
 		"ms-azuretools.vscode-docker"
 	],
 
-	"waitFor": "postCreateCommand",
+	"waitFor": "postStartCommand",
 
 	// Use 'onCreateCommand' to run commands as part of container creation.
 	"onCreateCommand": "/bin/bash -c .devcontainer/on-create.sh",
