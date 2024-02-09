@@ -176,7 +176,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 
 	html := getTemplate()
 
-	html = strings.Replace(html, "{{url}}", uri, -1)
+	html = strings.Replace(html, "{{uri}}", uri, -1)
 	html = strings.Replace(html, "{{title}}", title, -1)
 	html = strings.Replace(html, "{{table}}", strings.TrimRight(table, "\n"), -1)
 
@@ -327,6 +327,42 @@ func getTemplate() string {
 	<body>
 		<div class="container">
 			<h1>{{title}}</h1>
+
+			<h2>URLs</h2>
+			<table>
+				<tr>
+					<th>Description</th>
+					<th>URL</th>
+				</tr>
+				<tr>
+					<td>Version</td>
+					<td><a href="{{uri}}version">{{uri}}version</a></td>
+				</tr>
+				<tr>
+					<td>Health Check</td>
+					<td><a href="{{uri}}healthz">{{uri}}healthz</a></td>
+				</tr>
+				<tr>
+					<td>Ready Check</td>
+					<td><a href="{{uri}}readyz">{{uri}}readyz</a></td>
+				</tr>
+				<tr>
+					<td>16 bytes</td>
+					<td><a href="{{uri}}16">{{uri}}16</a></td>
+				</tr>
+				<tr>
+					<td>1KB</td>
+					<td><a href="{{uri}}1024">{{uri}}1024</a></td>
+				</tr>
+				<tr>
+					<td>64KB</td>
+					<td><a href="{{uri}}65536">{{uri}}65536</a></td>
+				</tr>
+				<tr>
+					<td>1MB</td>
+					<td><a href="{{uri}}1048576">{{uri}}1048576</a></td>
+				</tr>
+			</table>
 
 			<h2>Environment Variables</h2>
 
