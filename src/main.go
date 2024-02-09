@@ -155,12 +155,8 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Iterate through environment variables
 	for _, envVar := range envVars {
-		if strings.HasPrefix(envVar, "e_") || true {
-			parts := strings.SplitN(envVar, "=", 2)
-			key := strings.Replace(strings.Replace(parts[0], "e_", "", 1), "_", " ", -1)
-			value := parts[1]
-			envMap[key] = value
-		}
+		parts := strings.SplitN(envVar, "=", 2)
+		envMap[parts[0]] = parts[1]
 	}
 
 	// Sort the keys
